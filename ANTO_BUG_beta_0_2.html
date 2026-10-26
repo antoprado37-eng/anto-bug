@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0b0e1a" />
+<title>ANTO BUG · Buscador de salas</title>
+<style>
+:root{color-scheme:dark;--bg:#090b16;--card:#161a2d;--card2:#1d2340;--edge:#333b5c;--fg:#f5f4ff;--muted:#adb0ce;--pink:#ff5fbb;--mint:#4be6bf;--yellow:#ffd782;--danger:#ff979a}
+[hidden]{display:none!important}*{box-sizing:border-box}html{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--fg)}body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 85% 0%,#311a50 0%,transparent 36%),radial-gradient(ellipse at 0% 30%,#0c3748 0%,transparent 34%),var(--bg)}button,input,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
+.wrap{width:min(100%,540px);margin:auto;padding:20px 18px 34px}.head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:4px 0 20px}.logo{font-size:16px;font-weight:900;letter-spacing:.08em}.logo em{font-style:normal;color:var(--pink)}.version{font-size:11px;color:var(--muted);border:1px solid var(--edge);padding:6px 9px;border-radius:999px}.hero{padding:24px 20px;background:linear-gradient(130deg,rgba(102,60,153,.35),rgba(11,17,37,.93) 58%);border-radius:24px;border:1px solid #514270;box-shadow:0 14px 50px #0005}.hero-inner{display:flex;align-items:center;gap:14px}.orb{display:grid;place-items:center;width:68px;height:68px;flex:none;border-radius:50%;border:2px solid #dc76ca;background:radial-gradient(circle,#773d9f,#211834 65%);font-size:36px;box-shadow:0 0 26px #bd54b145}.hero h1{font-size:31px;line-height:1.05;margin:0 0 6px;font-weight:950;letter-spacing:.025em}.hero p{margin:0;color:#c6c3dc;font-size:13px;line-height:1.45}.eyebrow{margin:0 0 8px;font-size:11px;letter-spacing:.14em;font-weight:800;color:var(--mint)}
+.main{display:grid;gap:15px;margin-top:16px}.panel{padding:18px;background:rgba(22,26,45,.96);border:1px solid var(--edge);border-radius:19px}.panel h2{margin:0;font-size:17px;letter-spacing:.01em}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.pill{font-size:11px;padding:6px 9px;border-radius:99px;font-weight:800;background:#2e314e;color:#ddd8ff;white-space:nowrap}.pill.live{color:#9df6d8;background:#194639}.pill.err{color:#ffbdbe;background:#59323c}.muted{color:var(--muted)}.small{font-size:12px;line-height:1.5}.status{padding:12px;background:#0e1429;border:1px solid #303a5b;border-radius:12px;margin:13px 0 12px;line-height:1.5;font-size:13px}.primary{background:linear-gradient(100deg,#ff69b3,#cc74ff);border:0;color:#171225;font-weight:850;border-radius:12px;padding:14px 18px;width:100%;box-shadow:0 5px 16px #fa62b52b}.primary:disabled{opacity:.5;cursor:wait}.outline{color:var(--fg);background:#252b49;border:1px solid #495174;padding:11px 13px;border-radius:12px;font-weight:700}.link{color:#baabff;text-decoration:underline;text-underline-offset:3px}.filter{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:15px 0 8px}.filter button{border:1px solid #3b4263;color:#c8c9dc;background:#232941;border-radius:10px;padding:9px 3px;font-weight:750;font-size:11px}.filter button[aria-pressed="true"]{background:#583366;color:white;border-color:#ef77c7}.list{display:grid;gap:9px;margin-top:12px}.item{display:flex;align-items:center;gap:10px;border-radius:12px;border:1px solid #39415f;background:#202640;padding:12px}.code{font-size:23px;font-weight:900;letter-spacing:.09em;font-variant-numeric:tabular-nums}.region{color:#a7b5db;font-size:11px;margin-top:2px}.grow{flex:1;min-width:0}.mini{font-size:18px;min-width:40px;min-height:40px;background:#303453;border:1px solid #505477;border-radius:11px;color:white}.mini.on{background:#5a3451;color:#ffbee8}.empty{padding:18px 10px;text-align:center;background:#141a2b;border-radius:12px;color:#a9b0d3;font-size:13px;line-height:1.55}.field{width:100%;background:#0f1428;color:white;border:1px solid #495173;border-radius:12px;padding:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:800}.form{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:13px}.form button{padding:0 16px;background:#4de4bf;border:0;color:#0c2421;border-radius:11px;font-weight:800}.disclaimer{color:#969cba;font-size:11px;line-height:1.65;margin-top:6px}.section-foot{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-top:10px;color:#aab2c9;font-size:11px}details{font-size:12px;color:#b5bbd9}summary{cursor:pointer}textarea{display:block;width:100%;min-height:110px;background:#0d1224;color:white;border-radius:10px;border:1px solid #38415e;margin:10px 0;padding:9px;font-size:12px}.secondary{font-size:11px;color:#ffdc9b}.pill.warn{color:#ffe4a4;background:#574326}.pill.manual{color:#d9caff;background:#49375e}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.stat{border-radius:12px;padding:11px 12px;background:#11182d;border:1px solid #303a59;min-width:0}.stat-num{font-size:22px;font-weight:900;line-height:1.3;font-variant-numeric:tabular-nums}.stat-label{font-size:11px;color:#abb3ce;line-height:1.45}.stat.prominent{border-color:#aa598e;background:#25172f}.stat.prominent .stat-num{color:#ffc3ec}.hint{font-size:11px;color:#b0b6d0;line-height:1.6;margin:3px 0 10px}.footer{text-align:center;color:#8c91b4;font-size:11px;margin-top:24px}#toast{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:max-content;max-width:90vw;z-index:6;pointer-events:none;padding:12px 18px;background:#405170;border:1px solid #7883a9;color:#fff;border-radius:12px;box-shadow:0 12px 35px #000a;opacity:0;transition:opacity .2s}#toast.show{opacity:1}@media(max-width:340px){.hero h1{font-size:25px}.orb{width:53px;height:53px}.wrap{padding:14px 12px}.filter button{font-size:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="head"><div class="logo">✦ <em>ANTO</em> BUG</div><div class="version">BETA 0.2 · ANDROID</div></header>
+<section class="hero"><div class="hero-inner"><div class="orb" aria-hidden="true">⌕</div><div><p class="eyebrow">BUSCADOR DEL CLAN</p><h1>ANTO BUG</h1><p>Terminaciones bug de Among Us<br>Sin APK · Sin permisos especiales</p></div></div></section>
+<main class="main">
+<section class="panel" aria-labelledby="title-live"><div class="row"><h2 id="title-live">📡 Búsqueda en vivo</h2><span id="livePill" class="pill">SIN COMPROBAR</span></div><p class="small muted">Fuente pública: AUGL. No busca jugadores ni entra automáticamente a salas.</p><div id="status" class="status" role="status" aria-live="polite">Pulsá «Buscar códigos» para consultar la fuente.</div><div id="stats" class="stats" aria-label="Resumen de la consulta" hidden><div class="stat"><div id="statReceived" class="stat-num">—</div><div class="stat-label">Códigos recibidos</div></div><div class="stat"><div id="statAwake" class="stat-num">—</div><div class="stat-label">No dormidos según AUGL</div></div><div class="stat"><div id="statGlitched" class="stat-num">—</div><div class="stat-label">Marcados como bug</div></div><div class="stat prominent"><div id="statReady" class="stat-num">—</div><div class="stat-label">Bug y no dormidos</div></div></div><p id="statHint" class="hint" hidden></p><button id="fetchButton" class="primary" type="button">🔎 Buscar códigos</button><div class="section-foot"><span id="lastUpdate">Última consulta: ninguna</span><a class="link" target="_blank" rel="noreferrer" href="https://augl.net/">Abrir AUGL ↗</a></div></section>
+<section class="panel" aria-labelledby="title-codes"><div class="row"><h2 id="title-codes">🟢 Códigos bug</h2><span id="numCodes" class="pill">—</span></div><div class="filter" role="group" aria-label="Filtrar por región"><button data-region="all" aria-pressed="true">Todas</button><button data-region="eu" aria-pressed="false">Europa</button><button data-region="na" aria-pressed="false">N. América</button><button data-region="as" aria-pressed="false">Asia</button></div><div id="codes" class="list"><div class="empty">Todavía no hay datos consultados.<br>Los códigos aparecerán aquí solo si los devuelve la fuente pública.</div></div><p class="disclaimer">«Bug» significa que la fuente lo marca como glitched. No garantiza que exista una sala accesible con esa terminación en este instante.</p></section>
+<section class="panel" aria-labelledby="title-favs"><div class="row"><h2 id="title-favs">💗 Mis favoritas</h2><span class="pill">GUARDADAS</span></div><p class="small muted">Terminaciones conocidas por el clan. No se presentan como detecciones activas.</p><div id="favorites" class="list"></div><form id="favForm" class="form"><input id="favInput" class="field" maxlength="4" pattern="[A-Za-z]{4}" title="Usá cuatro letras" placeholder="Ej.: WAQG" aria-label="Nueva terminación de cuatro letras" required><button type="submit">+ Guardar</button></form><p class="disclaimer">Se guardan únicamente en este navegador. Si borrás sus datos, podrían desaparecer.</p></section>
+<section class="panel"><details><summary>⚙️ ¿Qué pasa si falla la conexión?</summary><p class="small muted">El servicio puede estar caído, cambiar su formato o bloquear la consulta desde algunos navegadores. Si pasa, ANTO BUG no inventará resultados. «CONECTADO» solo significa que la API respondió, no que una sala se pueda abrir.</p><p class="small muted">Prueba avanzada: pegá una respuesta JSON de códigos. Se marcará como PRUEBA MANUAL, nunca como conexión en vivo.</p><textarea id="jsonBox" placeholder='Ejemplo ficticio: [{"code":"TEST","region":"eu","glitched":true,"dormant":false}]' spellcheck="false"></textarea><button id="importButton" class="outline" type="button">Leer JSON pegado</button><div class="section-foot"><a href="https://api.augl.net/v1/codes" class="link" target="_blank" rel="noreferrer">Ver API original</a></div></details></section>
+</main><footer class="footer">ANTO BUG · Proyecto independiente y no oficial · Sin relación con Innersloth o AUGL<br>Solo consulta datos públicos, no modifica Among Us.</footer>
+</div><div id="toast" role="status" aria-live="polite"></div>
+<script>
+(()=>{'use strict';
+const API='https://api.augl.net/v1/codes';
+const KEY='anto_bug_favoritas_v1'; // Misma clave que la beta anterior: no borramos las favoritas
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const normalizeCode=value=>String(value??'').trim().toUpperCase().replace(/[^A-Z]/g,'');
+const validCode=value=>/^[A-Z]{4}$/.test(value);
+const names={eu:'Europa',na:'Norteamérica',as:'Asia',other:'Región sin identificar'};
+let allCodes=null;
+let filter='all';
+let toastTimeout=null;
+function loadFavs(){
+ try{
+  const a=JSON.parse(localStorage.getItem(KEY)||'null');
+  if(Array.isArray(a))return [...new Set(a.filter(validCode))].slice(0,200);
+ }catch(e){}
+ return ['WAQG'];
+}
+let favs=loadFavs();
+function saveFavs(){try{localStorage.setItem(KEY,JSON.stringify(favs))}catch(e){toast('No se pudieron guardar favoritas en este navegador.')}}
+function toast(message){const t=$('toast');t.textContent=message;t.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>t.classList.remove('show'),2400)}
+function normalizedRegion(value){
+ const s=String(value??'').toLowerCase();
+ if(/europe|europa|^eu$|^eu-/.test(s))return 'eu';
+ if(/america|americ|north|^na$|us-east|us-west|^na-/.test(s))return 'na';
+ if(/asia|^as$|^asia-|^as-/.test(s))return 'as';
+ return 'other';
+}
+// null = dato ausente o irreconocible; nunca equivale automáticamente a «false».
+function flag(v){
+ if(v===true||v===1||typeof v==='string'&&v.trim().toLowerCase()==='true')return true;
+ if(v===false||v===0||typeof v==='string'&&v.trim().toLowerCase()==='false')return false;
+ return null;
+}
+function parseList(body){
+ let source=body;
+ if(!Array.isArray(source)&&source&&typeof source==='object'){
+  const arr=[source.codes,source.data,source.results,source.lobbies,source.items].find(Array.isArray);
+  if(arr)source=arr;
+  else if(['europe','asia','northAmerica'].some(k=>Array.isArray(source[k])))
+   source=Object.keys(source).flatMap(k=>Array.isArray(source[k])?source[k].map(x=>({...x,region:x.region||k})):[]);
+ }
+ if(!Array.isArray(source))throw new Error('La API cambió el formato de respuesta.');
+ const found=new Map();
+ const stats={received:source.length,awake:0,glitched:0,ready:0,unknown:0,valid:0};
+ for(const entry of source){
+  if(!entry||typeof entry!=='object'){stats.unknown++;continue;}
+  const code=normalizeCode(entry.code??entry.Code??entry.suffix??entry.Suffix??entry.name);
+  if(!validCode(code)){stats.unknown++;continue;}
+  stats.valid++;
+  const glitched=flag(entry.glitched??entry.Glitched??entry.is_glitched??entry.isGlitched);
+  const dormant=flag(entry.dormant??entry.Dormant);
+  if(glitched===null||dormant===null)stats.unknown++;
+  if(glitched===true)stats.glitched++;
+  if(dormant===false)stats.awake++;
+  if(glitched!==true||dormant!==false)continue;
+  stats.ready++;
+  const region=normalizedRegion(entry.region??entry.Region??entry.server??entry.Server);
+  found.set(region+':'+code,{code,region});
+ }
+ if(stats.received>0&&stats.valid===0)throw new Error('No hay códigos reconocibles en la respuesta.');
+ if(stats.received>0&&stats.unknown===stats.received)throw new Error('No se reconocen los campos glitched/dormant. No se puede confirmar cero bugs.');
+ return {codes:[...found.values()].sort((a,b)=>a.region.localeCompare(b.region)||a.code.localeCompare(b.code)),stats};
+}
+function setStatus(message,kind){
+ $('status').textContent=message;
+ const p=$('livePill');
+ p.className='pill'+(kind==='ok'?' live':kind==='error'?' err':kind==='manual'?' manual':kind==='warn'?' warn':'');
+ p.textContent=({ok:'API RESPONDIÓ',error:'SIN DATOS',manual:'PRUEBA MANUAL',warn:'DATOS PARCIALES',loading:'CONSULTANDO'})[kind]||'SIN COMPROBAR';
+}
+function render(){
+ const selected=allCodes===null?null:allCodes.filter(x=>filter==='all'||x.region===filter);
+ $('numCodes').textContent=selected===null?'—':String(selected.length);
+ const box=$('codes');box.replaceChildren();
+ if(selected===null){box.innerHTML='<div class="empty">Todavía no hay datos verificados.<br>Pulsá «Buscar códigos» para consultar AUGL.</div>';return;}
+ if(selected.length===0){box.innerHTML='<div class="empty">La última consulta no mostró códigos bug no dormidos para este filtro.<br>No significa que no existan.</div>';return;}
+ selected.forEach(({code,region})=>{
+  const item=document.createElement('div');item.className='item';
+  const isFav=favs.includes(code);
+  item.innerHTML=`<div class="grow"><div class="code">${esc(code)}</div><div class="region">${esc(names[region])} · bug según los datos recibidos, no garantiza acceso</div></div><button class="mini ${isFav?'on':''}" type="button" aria-label="${isFav?'Quitar de favoritos':'Añadir a favoritos'}" title="Favorito">${isFav?'♥':'♡'}</button>`;
+  item.querySelector('button').onclick=()=>toggleFav(code);
+  box.append(item);
+ });
+}
+function renderFavs(){
+ const box=$('favorites');box.replaceChildren();
+ if(!favs.length){box.innerHTML='<div class="empty">Todavía no guardaste terminaciones.</div>';return;}
+ favs.forEach(code=>{
+  const listed=allCodes?.some(x=>x.code===code);
+  const item=document.createElement('div');item.className='item';
+  item.innerHTML=`<div class="grow"><div class="code">${esc(code)}</div><div class="region">${listed?'Marcado bug no dormido en la última consulta · no garantiza acceso':'Guardado por el clan · sin confirmar en la última consulta'}</div></div><button class="mini on" type="button" aria-label="Quitar ${esc(code)} de favoritas" title="Quitar">×</button>`;
+  item.querySelector('button').onclick=()=>toggleFav(code);
+  box.append(item);
+ });
+}
+function toggleFav(code){
+ if(favs.includes(code)){favs=favs.filter(x=>x!==code);toast(code+' eliminada de favoritas');}
+ else{favs.unshift(code);toast(code+' guardada en favoritas');}
+ saveFavs();render();renderFavs();
+}
+function showStats(stats){
+ $('stats').hidden=false;
+ $('statReceived').textContent=stats.received;
+ $('statAwake').textContent=stats.awake;
+ $('statGlitched').textContent=stats.glitched;
+ $('statReady').textContent=stats.ready;
+ $('statHint').hidden=false;
+ $('statHint').textContent=stats.unknown
+  ? `${stats.unknown} registros con datos faltantes o no reconocidos. Los recuentos pueden estar incompletos. «No dormido» no asegura que puedas entrar.`
+  : '«No dormido» es una marca informada por AUGL; no garantiza que la sala siga disponible ni que puedas entrar.';
+}
+function clearStats(){$('stats').hidden=true;$('statHint').hidden=true;}
+function applyData(body,source){
+ const data=parseList(body);
+ allCodes=data.codes;
+ showStats(data.stats);
+ const partial=data.stats.unknown>0;
+ const isManual=source==='manual';
+ let message=`${data.stats.received} ${data.stats.received===1?'código recibido':'códigos recibidos'}. ${data.stats.ready} ${data.stats.ready===1?'registro marcado':'registros marcados'} bug y no dormidos (${data.codes.length} ${data.codes.length===1?'terminación única':'terminaciones únicas'} por región).`;
+ if(partial)message+=' Algunos registros no se pudieron clasificar.';
+ if(isManual)message='JSON ingresado manualmente; NO es una consulta en vivo. '+message;
+ else message='Respuesta recibida de AUGL. '+message;
+ setStatus(message,isManual?'manual':partial?'warn':'ok');
+ const now=new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+ $('lastUpdate').textContent=(isManual?'Prueba manual: ':'Consulta: ')+now;
+ render();renderFavs();
+}
+async function fetchCodes(){
+ const btn=$('fetchButton');btn.disabled=true;
+ setStatus('Consultando AUGL…','loading');
+ const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),11000);
+ try{
+  const res=await fetch(API,{method:'GET',headers:{Accept:'application/json'},cache:'no-store',signal:controller.signal});
+  if(!res.ok)throw new Error('Respuesta HTTP '+res.status);
+  const obj=await res.json();applyData(obj,'api');
+ }catch(err){
+  allCodes=null;clearStats();render();renderFavs();
+  const why=err?.name==='AbortError'?'Tiempo de espera agotado':err?.message||'Error desconocido';
+  setStatus('No se pudo verificar la información de AUGL. No se muestran códigos inventados. Detalle: '+why,'error');
+  $('lastUpdate').textContent='Consulta fallida: '+new Date().toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'});
+ }finally{clearTimeout(timer);btn.disabled=false;}
+}
+$('fetchButton').addEventListener('click',fetchCodes);
+for(const b of document.querySelectorAll('[data-region]')){
+ b.addEventListener('click',()=>{
+  filter=b.dataset.region;
+  document.querySelectorAll('[data-region]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  render();
+ });
+}
+$('favForm').addEventListener('submit',e=>{
+ e.preventDefault();const input=$('favInput');const code=normalizeCode(input.value);
+ if(!validCode(code)){toast('Escribí exactamente cuatro letras');return;}
+ if(!favs.includes(code))toggleFav(code);else toast(code+' ya está guardado');
+ input.value='';
+});
+$('importButton').addEventListener('click',()=>{
+ try{const body=JSON.parse($('jsonBox').value);applyData(body,'manual');toast('JSON de prueba leído correctamente');}
+ catch(err){toast('JSON inválido o incompatible: '+err.message);}
+});
+renderFavs();render();
+})();
+</script>
+</body>
+</html>
