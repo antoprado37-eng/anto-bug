@@ -3,73 +3,72 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="theme-color" content="#0b0e1a" />
 <title>ANTO BUG · Creador de salas</title>
 <style>
-:root{color-scheme:dark;--bg:#090b16;--card:#161a2d;--card2:#1d2340;--edge:#333b5c;--fg:#f5f4ff;--muted:#adb0ce;--pink:#ff5fbb;--mint:#4be6bf;--yellow:#ffd782;--danger:#ff979a}
-[hidden]{display:none!important}*{box-sizing:border-box}html{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--fg)}body{margin:0;min-height:100dvh;background:radial-gradient(ellipse at 85% 0%,#311a50 0%,transparent 36%),radial-gradient(ellipse at 0% 30%,#0c3748 0%,transparent 34%),var(--bg)}button,input,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--mint);outline-offset:2px}
-.wrap{width:min(100%,540px);margin:auto;padding:20px 18px 34px}.head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:4px 0 20px}.logo{font-size:16px;font-weight:900;letter-spacing:.08em}.logo em{font-style:normal;color:var(--pink)}.version{font-size:11px;color:var(--muted);border:1px solid var(--edge);padding:6px 9px;border-radius:999px}.hero{padding:24px 20px;background:linear-gradient(130deg,rgba(102,60,153,.35),rgba(11,17,37,.93) 58%);border-radius:24px;border:1px solid #514270;box-shadow:0 14px 50px #0005}.hero-inner{display:flex;align-items:center;gap:14px}.orb{display:grid;place-items:center;width:68px;height:68px;flex:none;border-radius:50%;border:2px solid #dc76ca;background:radial-gradient(circle,#773d9f,#211834 65%);font-size:36px;box-shadow:0 0 26px #bd54b145}.hero h1{font-size:31px;line-height:1.05;margin:0 0 6px;font-weight:950;letter-spacing:.025em}.hero p{margin:0;color:#c6c3dc;font-size:13px;line-height:1.45}.eyebrow{margin:0 0 8px;font-size:11px;letter-spacing:.14em;font-weight:800;color:var(--mint)}
-.main{display:grid;gap:15px;margin-top:16px}.panel{padding:18px;background:rgba(22,26,45,.96);border:1px solid var(--edge);border-radius:19px}.panel h2{margin:0;font-size:17px;letter-spacing:.01em}.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.pill{font-size:11px;padding:6px 9px;border-radius:999px;font-weight:800;background:#2e314e;color:#ddd8ff;white-space:nowrap}.pill.live{color:#9df6d8;background:#194639}.pill.err{color:#ffbdbe;background:#59323c}.muted{color:var(--muted)}.small{font-size:12px;line-height:1.5}.status{padding:12px;background:#0e1429;border:1px solid #303a5b;border-radius:12px;margin:13px 0 12px;line-height:1.5;font-size:13px}.primary{background:linear-gradient(100deg,#ff69b3,#cc74ff);border:0;color:#171225;font-weight:850;border-radius:12px;padding:14px 18px;width:100%;box-shadow:0 5px 16px #fa62b52b}.primary:disabled{opacity:.5;cursor:wait}.outline{color:var(--fg);background:#252b49;border:1px solid #495174;padding:11px 13px;border-radius:12px;font-weight:700}.link{color:#baabff;text-decoration:underline;text-underline-offset:3px}.filter{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:15px 0 8px}.filter button{border:1px solid #3b4263;color:#c8c9dc;background:#232941;border-radius:10px;padding:9px 3px;font-weight:750;font-size:11px}.filter button[aria-pressed="true"]{background:#583366;color:white;border-color:#ef77c7}.list{display:grid;gap:9px;margin-top:12px}.item{display:flex;align-items:center;gap:10px;border-radius:12px;border:1px solid #39415f;background:#202640;padding:12px}.code{font-size:23px;font-weight:900;letter-spacing:.09em;font-variant-numeric:tabular-nums}.region{color:#a7b5db;font-size:11px;margin-top:2px}.grow{flex:1;min-width:0}.mini{font-size:18px;min-width:40px;min-height:40px;background:#303453;border:1px solid #505477;border-radius:11px;color:white}.mini.on{background:#5a3451;color:#ffbee8}.empty{padding:18px 10px;text-align:center;background:#141a2b;border-radius:12px;color:#a9b0d3;font-size:13px;line-height:1.55}.field{width:100%;background:#0f1428;color:white;border:1px solid #495173;border-radius:12px;padding:12px;text-transform:uppercase;letter-spacing:.09em;font-weight:800}.form{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:13px}.form button{padding:0 16px;background:#4de4bf;border:0;color:#0c2421;border-radius:11px;font-weight:800}.disclaimer{color:#969cba;font-size:11px;line-height:1.65;margin-top:6px}.section-foot{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;margin-top:10px;color:#aab2c9;font-size:11px}details{font-size:12px;color:#b5bbd9}summary{cursor:pointer}textarea{display:block;width:100%;min-height:110px;background:#0d1224;color:white;border-radius:10px;border:1px solid #38415e;margin:10px 0;padding:9px;font-size:12px}.secondary{font-size:11px;color:#ffdc9b}.pill.warn{color:#ffe4a4;background:#574326}.pill.manual{color:#d9caff;background:#49375e}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.stat{border-radius:12px;padding:11px 12px;background:#11182d;border:1px solid #303a59;min-width:0}.stat-num{font-size:22px;font-weight:900;line-height:1.3;font-variant-numeric:tabular-nums}.stat-label{font-size:11px;color:#abb3ce;line-height:1.45}.stat.prominent{border-color:#aa598e;background:#25172f}.stat.prominent .stat-num{color:#ffc3ec}.hint{font-size:11px;color:#b0b6d0;line-height:1.6;margin:3px 0 10px}.footer{text-align:center;color:#8c91b4;font-size:11px;margin-top:24px}.selectors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 15px}.select-wrap{display:grid;gap:5px}.select-wrap label{font-size:11px;color:var(--muted);font-weight:700}select{width:100%;background:#11182d;color:white;border:1px solid var(--edge);border-radius:10px;padding:10px}#toast{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);width:max-content;max-width:90vw;z-index:6;pointer-events:none;padding:12px 18px;background:#405170;border:1px solid #7883a9;color:#fff;border-radius:12px;box-shadow:0 12px 35px #000a;opacity:0;transition:opacity .2s}#toast.show{opacity:1}@media(max-width:340px){.hero h1{font-size:25px}.orb{width:53px;height:53px}.wrap{padding:14px 12px}.filter button{font-size:10px}}
+:root{color-scheme:dark;--bg:#090b16;--card:#161a2d;--edge:#333b5c;--fg:#f5f4ff;--muted:#adb0ce;--pink:#ff5fbb;--mint:#4be6bf}
+*{box-sizing:border-box}html,body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--fg)}
+.wrap{width:min(100%,540px);margin:auto;padding:20px 18px}
+.panel{padding:18px;background:rgba(22,26,45,.96);border:1px solid var(--edge);border-radius:19px;margin-bottom:15px}
+.row{display:flex;justify-content:space-between;align-items:center}
+.pill{font-size:11px;padding:6px 9px;border-radius:999px;font-weight:800;background:#2e314e;color:#ddd8ff}
+.pill.live{color:#9df6d8;background:#194639}
+.status{padding:12px;background:#0e1429;border:1px solid #303a5b;border-radius:12px;margin:12px 0;font-size:13px}
+.primary{background:linear-gradient(100deg,#ff69b3,#cc74ff);border:0;color:#171225;font-weight:850;border-radius:12px;padding:14px;width:100%}
+.selectors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.select-wrap{display:grid;gap:5px}select{background:#11182d;color:white;border:1px solid var(--edge);border-radius:10px;padding:10px}
+.list{display:grid;gap:9px;margin-top:12px}.item{border-radius:12px;border:1px solid #39415f;background:#202640;padding:12px}
+.code{font-size:23px;font-weight:900;letter-spacing:.09em}.empty{text-align:center;padding:15px;color:var(--muted)}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header class="head"><div class="logo">✦ <em>ANTO</em> BUG</div><div class="version">BETA 0.3 · PRIVATE</div></header>
-<section class="hero"><div class="hero-inner"><div class="orb" aria-hidden="true">🎮</div><div><p class="eyebrow">CREADOR DEL CLAN</p><h1>ANTO BUG</h1><p>Generador de salas Among Us modificadas<br>Conexión directa a tu servidor privado</p></div></div></section>
-<main class="main">
-<section class="panel" aria-labelledby="title-live">
-<div class="row"><h2 id="title-live">⚙️ Configurar Sala Bug</h2><span id="livePill" class="pill">LISTO</span></div>
-<p class="small muted">Elige los parámetros que tendrá la sala antes de generarla.</p>
-
-<div class="selectors">
- <div class="select-wrap">
-  <label for="selectImpostores">Impostores</label>
-  <select id="selectImpostores">
-   <option value="1">1 Impostor</option>
-   <option value="2" selected>2 Impostores</option>
-   <option value="3">3 Impostores</option>
-  </select>
- </div>
- <div class="select-wrap">
-  <label for="selectVelocidad">Velocidad</label>
-  <select id="selectVelocidad">
-   <option value="1.0">x1.0 (Normal)</option>
-   <option value="1.5" selected>x1.5 (Recomendado)</option>
-   <option value="2.0">x2.0 (Rápido)</option>
-   <option value="3.0">x3.0 (Bug Extremo)</option>
-  </select>
- </div>
+ <header style="margin-bottom:20px;font-weight:900">✦ ANTO BUG</header>
+ <section class="panel">
+  <div class="row"><h2>⚙️ Configurar Sala Bug</h2><span id="livePill" class="pill">LISTO</span></div>
+  <div class="selectors">
+   <div class="select-wrap"><label>Impostores</label><select id="selectImpostores"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></div>
+   <div class="select-wrap"><label>Velocidad</label><select id="selectVelocidad"><option value="1.0">x1.0</option><option value="1.5" selected>x1.5</option><option value="3.0">x3.0</option></select></div>
+  </div>
+  <div id="status" class="status">Presiona «Crear Nueva Sala» para mandar la orden.</div>
+  <button id="fetchButton" class="primary" type="button">🚀 Crear Nueva Sala</button>
+ </section>
+ <section class="panel">
+  <div class="row"><h2>🟢 Códigos Generados</h2></div>
+  <div id="codes" class="list"><div class="empty">Los códigos aparecerán aquí.</div></div>
+ </section>
 </div>
-
-<div id="status" class="status" role="status" aria-live="polite">Presiona «Crear Nueva Sala» para mandar la orden al servidor.</div>
-<button id="fetchButton" class="primary" type="button">🚀 Crear Nueva Sala</button>
-<div class="section-foot"><span id="lastUpdate">Última acción: ninguna</span></div>
-</section>
-
-<section class="panel" aria-labelledby="title-codes"><div class="row"><h2 id="title-codes">🟢 Códigos Generados</h2><span id="numCodes" class="pill">—</span></div><div id="codes" class="list"><div class="empty">Todavía no has generado salas en esta sesión. El código de 6 letras aparecerá aquí.</div></div></section>
-<section class="panel" aria-labelledby="title-favs"><div class="row"><h2 id="title-favs">💗 Mis favoritas</h2><span class="pill">GUARDADAS</span></div><p class="small muted">Terminaciones conocidas por el clan.</p><div id="favorites" class="list"></div><form id="favForm" class="form"><input id="favInput" class="field" maxlength="4" pattern="[A-Za-z]{4}" title="Usá cuatro letras" placeholder="Ej.: WAQG" aria-label="Nueva terminación de cuatro letras" required><button type="submit">+ Guardar</button></form></section>
-</main><footer class="footer">ANTO BUG · Panel de control de salas privadas.</footer>
-</div><div id="toast" role="status" aria-live="polite"></div>
 <script>
 (()=>{'use strict';
-
-// URL interna para pruebas locales o rellenar con tu IP pública del VPS posteriormente
-const API = 'http://localhost:8080/crear-sala'; 
-
-const KEY='anto_bug_favoritas_v1';
+const API = 'https://onrender.com';
 const $=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'''}[ch]));
-const normalizeCode=value=>String(value??'').trim().toUpperCase().replace(/[^A-Z]/g,'');
-const validCode=value=>/^[A-Z]{6}$/.test(value) || /^[A-Z]{4}$/.test(value);
 let allCodes=[];
-let toastTimeout=null;
-
-function loadFavs(){
+async function crearSala(){
+ const btn=$('fetchButton');btn.disabled=true;
+ $('status').textContent='Enviando parámetros al servidor privado…';
+ const params={impostores:parseInt($('selectImpostores').value),velocidad:parseFloat($('selectVelocidad').value)};
  try{
-  const a=JSON.parse(localStorage.getItem(KEY)||'null');
-  if(Array.isArray(a))return [...new Set(a.filter(x=>/^[A-Z]{4}$/.test(x)))].slice(0,200);
- }catch(e){}
- return ['WAQG'];
+  const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(params)});
+  if(!res.ok)throw new Error('Error '+res.status);
+  const obj=await res.json();
+  if(obj&&obj.code){
+   allCodes.unshift({code:obj.code.toUpperCase(),imp:params.impostores,vel:params.velocidad});
+   $('status').textContent='¡Sala creada con éxito!';
+  }
+ }catch(err){
+  $('status').textContent='Error de conexión: '+err.message;
+ }finally{
+  btn.disabled=false;
+  const box=$('codes');box.replaceChildren();
+  if(allCodes.length===0){box.innerHTML='<div class="empty">Ningún código generado.</div>';}
+  allCodes.forEach(x=>{
+   const item=document.createElement('div');item.className='item';
+   item.innerHTML=`<div class="code">${x.code}</div><div style="font-size:11px;color:#abb3ce">Impostores: ${x.imp} · Velocidad: x${x.vel}</div>`;
+   box.append(item);
+  });
+ }
 }
-let favs=loadFavs();
-function saveFavs(){try{localStorage.setItem(KEY,JSON.stringify(favs))}catch(e){toast('Error al guardar favoritas.')}}
+$('fetchButton').addEventListener('click',crearSala);
+})();
+</script>
+</body>
+</html>
