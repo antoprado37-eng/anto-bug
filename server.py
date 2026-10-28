@@ -1,56 +1,34 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import random
 import string
 import os
 
-class AmongUsControlServer(BaseHTTPRequestHandler):
-    def _set_headers(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-        self.end_headers()
+app = Flask(__name__)
+# Permitir que antobug.com acceda sin bloqueos de seguridad
+CORS(app)
 
-    def do_OPTIONS(self):
-        self._set_headers()
-
-    def do_POST(self):
-        self._set_headers()
-        if self.path == '/crear-sala':
-            try:
-                content_length = int(self.headers.get('Content-Length', 0))
-                post_data = self.rfile.read(content_length) if content_length > 0 else b'{}'
-                
-                params = json.loads(post_data.decode('utf-8')) if post_data else {}
-                impostores = params.get('impostores', 2)
-                velocidad = params.get('velocidad', 1.5)
-
-                # Código de 6 letras aleatorio para Among Us
-                letras = string.ascii_uppercase
-                codigo_sala = ''.join(random.choice(letras) for _ in range(6))
-
-                respuesta = {
-                    "status": "success",
-                    "code": codigo_sala
-                }
-                self.wfile.write(json.dumps(respuesta).encode('utf-8'))
-            except Exception as e:
-                self.wfile.write(json.dumps({"error": str(e)}).encode('utf-8'))
-
-def run():
-    # Detecta automáticamente el puerto asignado por Render (por defecto 10000 o el 8080 que pusiste)
-    port = int(os.environ.get("PORT", 8080))
-    # Enlaza el host a 0.0.0.0 requerido obligatoriamente por Render
-    server_address = ('0.0.0.0', port)
-    httpd = HTTPServer(server_address, AmongUsControlServer)
-    print(f"Servidor corriendo en el puerto {port}")
+@app.route('/crear-sala', methods=['POST'])
+def crear_sala():
     try:
-        httpd.serve_forever()
-    except KeyboardInterrupt:
-        pass
-    httpd.server_close()
+        data = request.get_json() or {}
+        impostores = data.get('impostores', 2)
+        velocidad = data.get('velocidad', 1.5)
+        
+        print(f"Petición recibida: Impostores {impostores}, Velocidad {velocidad}")
+
+        # Generar código de 6 letras válido para Among Us
+        letras = string.ascii_uppercase
+        codigo_sala = ''.join(random.choice(letras) for _ in range(6))
+
+        return jsonify({
+            "status": "success",
+            "code": codigo_sala
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 400
 
 if __name__ == '__main__':
-    run()
+    # Render asigna el puerto automáticamente aquí
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
