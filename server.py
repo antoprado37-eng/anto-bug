@@ -2,12 +2,12 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import random
 import string
+import os
 
 class AmongUsControlServer(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
-        # Permisos de seguridad corregidos para antobug.com
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
@@ -27,7 +27,7 @@ class AmongUsControlServer(BaseHTTPRequestHandler):
                 impostores = params.get('impostores', 2)
                 velocidad = params.get('velocidad', 1.5)
 
-                # Generar código aleatorio de 6 letras para Among Us
+                # Código de 6 letras aleatorio para Among Us
                 letras = string.ascii_uppercase
                 codigo_sala = ''.join(random.choice(letras) for _ in range(6))
 
@@ -39,10 +39,13 @@ class AmongUsControlServer(BaseHTTPRequestHandler):
             except Exception as e:
                 self.wfile.write(json.dumps({"error": str(e)}).encode('utf-8'))
 
-def run(port=8080):
-    server_address = ('', port)
+def run():
+    # Detecta automáticamente el puerto asignado por Render (por defecto 10000 o el 8080 que pusiste)
+    port = int(os.environ.get("PORT", 8080))
+    # Enlaza el host a 0.0.0.0 requerido obligatoriamente por Render
+    server_address = ('0.0.0.0', port)
     httpd = HTTPServer(server_address, AmongUsControlServer)
-    print(f"Servidor corriendo en puerto {port}")
+    print(f"Servidor corriendo en el puerto {port}")
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
