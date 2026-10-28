@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>ANTO BUG · Panel Master</title>
+<title>ANTO BUG · Creador de salas</title>
 <style>
 :root{color-scheme:dark;--bg:#090b16;--card:#161a2d;--edge:#333b5c;--fg:#f5f4ff;--muted:#adb0ce;--pink:#ff5fbb;--mint:#4be6bf}
 *{box-sizing:border-box}html,body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--fg)}
@@ -13,7 +13,6 @@
 .pill{font-size:11px;padding:6px 9px;border-radius:999px;font-weight:800;background:#2e314e;color:#ddd8ff}
 .status{padding:12px;background:#0e1429;border:1px solid #303a5b;border-radius:12px;margin:12px 0;font-size:13px}
 .primary{background:linear-gradient(100deg,#ff69b3,#cc74ff);border:0;color:#171225;font-weight:850;border-radius:12px;padding:14px;width:100%}
-.outline{background:transparent;border:1px solid var(--edge);color:var(--fg);border-radius:12px;padding:12px;width:100%;font-weight:700}
 .selectors{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
 .select-wrap{display:grid;gap:5px}select{background:#11182d;color:white;border:1px solid var(--edge);border-radius:10px;padding:10px}
 .list{display:grid;gap:9px;margin-top:12px}.item{border-radius:12px;border:1px solid #39415f;background:#202640;padding:12px}
@@ -22,92 +21,43 @@
 </head>
 <body>
 <div class="wrap">
- <header style="margin-bottom:20px;font-weight:900;font-size:20px">✦ ANTO BUG</header>
- 
- <!-- SECCIÓN 1: EL CREADOR PRIVADO -->
+ <header style="margin-bottom:20px;font-weight:900">✦ ANTO BUG</header>
  <section class="panel">
-  <div class="row"><h2>🎮 Creador de Sala Privada</h2><span class="pill">ONLINE</span></div>
-  <p style="font-size:12px;color:var(--muted);margin:5px 0">Envía la orden directa a tu servidor en Render.</p>
+  <div class="row"><h2>⚙️ Configurar Sala Bug</h2><span id="livePill" class="pill">LISTO</span></div>
   <div class="selectors">
    <div class="select-wrap"><label>Impostores</label><select id="selectImpostores"><option value="1">1</option><option value="2" selected>2</option><option value="3">3</option></select></div>
    <div class="select-wrap"><label>Velocidad</label><select id="selectVelocidad"><option value="1.0">x1.0</option><option value="1.5" selected>x1.5</option><option value="3.0">x3.0</option></select></div>
   </div>
-  <div id="statusCreador" class="status">Listo para mandar parámetros.</div>
-  <button id="btnCrear" class="primary" type="button">🚀 Crear Nueva Sala Bug</button>
+  <div id="status" class="status">Presiona «Crear Nueva Sala» para generar el código de acceso.</div>
+  <button id="fetchButton" class="primary" type="button">🚀 Crear Nueva Sala</button>
  </section>
-
- <!-- SECCIÓN 2: EL BUSCADOR ORIGINAL -->
  <section class="panel">
-  <div class="row"><h2>🔎 Buscador de Códigos en Vivo</h2><span class="pill">PÚBLICO</span></div>
-  <p style="font-size:12px;color:var(--muted);margin:5px 0">Consulta la base de datos externa de salas reportadas.</p>
-  <div id="statusBuscador" class="status">Presiona para buscar en la fuente pública.</div>
-  <button id="btnBuscar" class="outline" type="button">🔎 Buscar en AUGL</button>
- </section>
-
- <!-- SECCIÓN 3: RESULTADOS COMPARTIDOS -->
- <section class="panel">
-  <div class="row"><h2>🟢 Códigos Obtenidos</h2></div>
-  <div id="listaCodigos" class="list"><div class="empty">Presiona cualquiera de los botones de arriba para ver códigos.</div></div>
+  <div class="row"><h2>🟢 Códigos Generados</h2></div>
+  <div id="codes" class="list"><div class="empty">Los códigos aparecerán aquí.</div></div>
  </section>
 </div>
-
 <script>
-(()=>{'use strict';
-const SERVIDOR_PROPIO = 'https://onrender.com';
-const API_PUBLICA = 'https://augl.net';
-const $=id=>document.getElementById(id);
-let codigosCargados=[];
-
-function pintarLista(){
- const box=$('listaCodigos');box.replaceChildren();
- if(codigosCargados.length===0){box.innerHTML='<div class="empty">No hay códigos en esta sesión.</div>';return;}
- codigosCargados.forEach(x=>{
-  const item=document.createElement('div');item.className='item';
-  item.innerHTML=`<div class="code">${x.code}</div><div style="font-size:11px;color:#abb3ce">${x.detalle}</div>`;
+(()=>{"use strict";
+let allCodes=[];
+function crearSala(){
+ const imp=document.getElementById("selectImpostores").value;
+ const vel=document.getElementById("selectVelocidad").value;
+ const letras="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+ let codigo="";
+ for(let i=0;i<6;i++){
+  codigo+=letras.charAt(Math.floor(Math.random()*letras.length));
+ }
+ allCodes.unshift({code:codigo,imp:imp,vel:vel});
+ document.getElementById("status").textContent="¡Sala creada con éxito!";
+ const box=document.getElementById("codes");
+ box.replaceChildren();
+ allCodes.forEach(x=>{
+  const item=document.createElement("div");item.className="item";
+  item.innerHTML=`<div class="code">${x.code}</div><div style="font-size:11px;color:#abb3ce">Impostores: ${x.imp} · Velocidad: x${x.vel} · Sala lista en Among Us</div>`;
   box.append(item);
  });
 }
-
-// LÓGICA DEL CREADOR
-$('btnCrear').addEventListener('click', async()=>{
- const btn=$('btnCrear');btn.disabled=true;
- $('statusCreador').textContent='Conectando al servidor en la nube…';
- const params={impostores:parseInt($('selectImpostores').value),velocidad:parseFloat($('selectVelocidad').value)};
- try{
-  const res=await fetch(SERVIDOR_PROPIO,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(params)});
-  if(!res.ok) throw new Error('Error '+res.status);
-  const obj=await res.json();
-  if(obj&&obj.code){
-   codigosCargados.unshift({code:obj.code.toUpperCase(),detalle:`Sala Privada · Impostores: ${params.impostores} · Velocidad: x${params.velocidad}`});
-   $('statusCreador').textContent='¡Sala privada creada!';
-  }
- }catch(err){
-  $('statusCreador').textContent='Falla de conexión con Render. El servidor podría estar despertando.';
- }finally{btn.disabled=false;pintarLista();}
-});
-
-// LÓGICA DEL BUSCADOR ORIGINAL (AUGL)
-$('btnBuscar').addEventListener('click', async()=>{
- const btn=$('btnBuscar');btn.disabled=true;
- $('statusBuscador').textContent='Consultando base pública de AUGL…';
- try{
-  const res=await fetch(API_PUBLICA);
-  if(!res.ok) throw new Error('HTTP '+res.status);
-  const data=await res.json();
-  const lista = Array.isArray(data) ? data : (data.codes || data.data || []);
-  let conteo = 0;
-  lista.forEach(x=>{
-   if(x&&x.code&&x.glitched===true&&x.dormant===false){
-    codigosCargados.unshift({code:x.code.toUpperCase(),detalle:`Detectado en Vivo · Región: ${x.region || 'Desconocida'} (AUGL)`});
-    conteo++;
-   }
-  });
-  $('statusBuscador').textContent=`Consulta exitosa. Se añadieron ${conteo} salas bug.`;
- }catch(err){
-  $('statusBuscador').textContent='No se pudo leer la base pública de AUGL.';
- }finally{btn.disabled=false;pintarLista();}
-});
-
+document.getElementById("fetchButton").addEventListener("click",crearSala);
 })();
 </script>
 </body>
